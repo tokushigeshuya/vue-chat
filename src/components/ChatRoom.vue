@@ -26,6 +26,7 @@
 </template>
 <script>
 import axios from 'axios';
+import { inject } from 'vue';
 
 export default {
     props: ['roomId'],
@@ -39,10 +40,30 @@ export default {
             newMessageContent: '',
         };
     },
+    setup(){
+        const cable = inject('cable');
+        return { cable };
+    },
     created() {
         this.fetchMessages();
+        this.createSubscription();
     },
     methods:{
+        // 特定のチャンネル（チャットルーム）に対してサブスクリプションを作成
+        createSubscription(){
+            // 指定したチャンネルに対して新しいサブスクリプションを作成
+            this.subscription = this.cable.subscriptions.create(
+                // 作成するチャンネル名と受信時の動作定義
+                { channel: 'RoomChannel', room_id: this.roomId },
+                {
+                    // メッセージ受信時の動作
+                    received: message => {
+                        console.log(message);
+                        this.messages.push(message);
+                    },
+                }
+            );
+        },
         fetchMessages(){
             // 特定のチャットルームのメッセージを取得
             axios
