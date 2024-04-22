@@ -20,7 +20,7 @@ export default {
     methods: {
         test() {
         // 接続先(HTTPリクエストを送信します) 
-            fetch('http://localhost:3000/api/test')
+            fetch(`${import.meta.env.VITE_API_URL}/api/test`)
             // レスポンスの内容をJSON形式に変換し、その後、data.message の値を message プロパティに設定
             .then((response) => response.json())
             .then((data) => {

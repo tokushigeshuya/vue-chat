@@ -33,7 +33,7 @@ export default {
     methods:{
         fetchChatRooms(){
             axios
-            .get('http://localhost:3000/rooms')
+            .get(`${import.meta.env.VITE_API_URL}/rooms`)
             .then(response => {
                 this.chatRooms = response.data;
             })
@@ -44,7 +44,7 @@ export default {
         // newRoomNameを使用して新しいチャットルームを作成する
         createRoom(){
             // 作成フォームの入力内容をサーバーに送信
-            axios.post('http://localhost:3000/rooms', {
+            axios.post(`${import.meta.env.VITE_API_URL}/rooms`, {
                 name: this.newRoomName,
             })
             .then(response => {

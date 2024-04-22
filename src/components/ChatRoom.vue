@@ -67,7 +67,7 @@ export default {
         fetchMessages(){
             // 特定のチャットルームのメッセージを取得
             axios
-            .get(`http://localhost:3000/rooms/${this.roomId}/messages`)
+            .get(`${import.meta.env.VITE_API_URL}/rooms/${this.roomId}/messages`)
             .then((response) => {
                 this.messages = response.data;
             })
@@ -79,7 +79,7 @@ export default {
         sendMessage(){
             axios
             // 送信先のURLは、チャットルームのIDとメッセージを組み合わせたもの
-            .post(`http://localhost:3000/rooms/${this.roomId}/messages`, {
+            .post(`${import.meta.env.VITE_API_URL}/rooms/${this.roomId}/messages`, {
                 // 内容
                 content: this.newMessageContent,
                 // 送信者名
